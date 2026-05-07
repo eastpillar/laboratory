@@ -15,8 +15,8 @@ restore = False
 exp_name = 'model_accuracy'
 #데이터 불러오기
 
-train_list_path = '/home/aivs/바탕화면/adj_test/DenseNet/train_img_dir.txt' #Provide the TXT file path for your train image list.
-test_list_path = '/home/aivs/바탕화면/adj_test/DenseNet/test_img_dir.txt' #Provide the TXT file path for your test image list.
+train_list_path = 'train_img_dir.txt' #Provide the TXT file path for your train image list.
+test_list_path = 'test_img_dir.txt' #Provide the TXT file path for your test image list.
 train_img_arr, train_img_gt, test_img, test_img_gt = data_loader(train_list_path, test_list_path)
 
 print('data load finish')
