@@ -87,7 +87,7 @@ for epoch in range(1,EPOCHS+1):
         torch.save(model.state_dict(), f'./model_save/{epoch}_model.pt')
 
 
-# Record performance for .pt checkpoints
+# Record performance for .pt checkpoints.
 # for i in range(1, 21):
 #     n = i*10
 #     #model.load_state_dict(torch.load(f'./model_save/{n}_model.pt'))
