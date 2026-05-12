@@ -46,7 +46,7 @@ def data_loader(train_list_path, test_list_path):
     return train_images_arr, train_images_gt, test_images, test_images_gt, test_image_name
 
 def checknum(dirname):
-    path = f"/home/aivs/바탕화면/dataset/Tiny_ImageNet/{dirname}/"
+    path = f"/Tiny_ImageNet/{dirname}/"
 
     cls_list = os.listdir(path)
     q = 0
