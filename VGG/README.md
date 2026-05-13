@@ -11,7 +11,7 @@
 - setting
   - 
   * Dataset
-      1. Image : TinyImageSet
+      1. Image : TinyImageNet
       2. Size : 128 x 128
       3. Train : 207,005
       4. Test : 51,752
