@@ -1,36 +1,33 @@
-import os
 from Load import mini_batch, data_loader
-from network import ResNet101
+from network import DenseNet121
 import torch
 import torch.optim as optim
 import torch.nn.functional as F
 import numpy as np
 import math
 
-batch_size = 256
+batch_size = 128
 EPOCHS = 150
 save_t = 10
 restore = False
-exp_name = '101_layer_accuracy'
+exp_name = 'dense_CBAM_121_accuracy'
 #데이터 불러오기
 train_list_path = 'train_img_dir.txt' # Provide the TXT file path for your train image list.
 test_list_path = 'test_img_dir.txt' # Provide the TXT file path for your test image list.
+train_img_arr, train_img_gt, test_img, test_img_gt = data_loader(train_list_path, test_list_path)
 
-train_img_arr, train_img_gt, test_img, test_img_gt, test_img_name = data_loader(train_list_path, test_list_path)
-
-print('data load finish')
+print('finish load data')
 
 USE_CUDA = torch.cuda.is_available()
 DEVICE = torch.device('cuda' if USE_CUDA else 'cpu')
+print(DEVICE)
 
-model = ResNet101().to(DEVICE)
 
-## Load Pretrained
-# model.load_state_dict(torch.load('/90_model.pt', map_location=DEVICE))
+model = DenseNet121(growth_rate=32, comp_factor=0.5).to(DEVICE)
 if restore:
     model.load_state_dict(torch.load(f'{restore}_model.pth'))
 
-optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9, weight_decay=0.0005)
+optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9, weight_decay=0.0001)
 #scheduler = ReduceLROnPlateau(optimizer, 'min', 0.1)
 
 def train(model, image_data, image_gt, batch_size, optimizer, DEVICE):
@@ -44,8 +41,7 @@ def train(model, image_data, image_gt, batch_size, optimizer, DEVICE):
         batch_img, batch_target = mini_batch(batch_split_img[batch_idx], batch_split_gt[batch_idx], batch_size)
         bth_img, bth_target = batch_img.to(DEVICE), batch_target.to(DEVICE)
         optimizer.zero_grad()
-        with torch.no_grad():
-            output,_ = model(bth_img)
+        output = model(bth_img)
         loss = F.cross_entropy(output, bth_target)
         train_loss += loss
         loss.backward()
@@ -53,15 +49,13 @@ def train(model, image_data, image_gt, batch_size, optimizer, DEVICE):
     train_loss /= len(image_data)
     return train_loss
 
+
 def evaluate(model,test_data, test_gt, DEVICE):
     model.eval()
     test_loss = 0
     correct = 0
     with torch.no_grad():
         for bth in range(len(test_data)):
-            #batch_val, batch_val_target = mini_batch(test_data, test_gt, bth_size)
-            test_img, test_target = test_data[bth], test_gt[bth]
-            # bth_test, bth_test_target = torch.from_numpy(test_img.astype(np.float32)), torch.from_numpy(test_target.astype(np.float32))
             bth_test = torch.from_numpy(np.array([test_data[bth]], dtype=np.float32))/255*2.0-1.0
             bth_test_target = torch.from_numpy(np.array([test_gt[bth]], dtype=np.int64))
             bth_test, bth_test_target = bth_test.permute(0, 3, 1, 2).to(DEVICE), bth_test_target.to(DEVICE)
@@ -70,15 +64,12 @@ def evaluate(model,test_data, test_gt, DEVICE):
             predict = output.max(1, keepdim=True)[1]
             #print(predict)
             correct += predict.eq(bth_test_target.view_as(predict)).sum().item()
-
     test_loss /= len(test_data)
     test_accuracy = 100. * correct / len(test_data)
     return test_loss, test_accuracy
 
-
 for epoch in range(1,EPOCHS+1):
-    optim_lr = optimizer.param_groups[0]['lr']
-    if epoch % 30 == 0:
+    if epoch == int(EPOCHS*0.5) or epoch == int(EPOCHS*0.75):
         optimizer.param_groups[0]['lr'] = optimizer.param_groups[0]['lr'] * 0.1
     check_lr = optimizer.param_groups[0]['lr']
     train_loss = train(model, train_img_arr, train_img_gt, batch_size, optimizer, DEVICE)
@@ -90,7 +81,7 @@ for epoch in range(1,EPOCHS+1):
     print("test done")
     print('[{}]Train Loss : {:.6f}, Test Loss : {:.6f}, test Accuracy : {:.3f}%, LR : {:.6f}'.format(epoch, train_loss, test_loss, test_accuracy, check_lr))
     if epoch % save_t == 0:
-        torch.save(model.state_dict(), f'/{epoch}_model.pt')
+        torch.save(model.state_dict(), f'./model_save/{epoch}_model.pt')
 
 # Record performance for .pt checkpoints.
 # for i in range(1, 21):
