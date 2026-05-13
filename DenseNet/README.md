@@ -35,4 +35,4 @@
 |:--------:|:----------------:|:-------------------------:|:-----------------------:|
 | DenseNet | TinyImageNet_200 |          71.48%           |         65.78%          |
 
-<span align="center"><img src="acc_graph.png"/></span>
+<span align="center"><img src="DenseNEt_exp.png"/></span>
