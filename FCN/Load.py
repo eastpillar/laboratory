@@ -7,8 +7,8 @@ from random import shuffle
 
 
 def data_loader(train_file, test_file):
-    img_path = '/home/aivs/바탕화면/hdd/dataset/VOCtrainval_11-May-2012/VOCdevkit/VOC2012/JPEGImages'
-    gt_img_path = '/home/aivs/바탕화면/hdd/dataset/VOCtrainval_11-May-2012/VOCdevkit/VOC2012/SegmentationClassAug'
+    img_path = "\VOCtrainval_11-May-2012\VOCtrainval_11-May-2012\VOCdevkit\VOC2012\JPEGImages" # Enter the path to the image folder
+    gt_img_path = "\VOCtrainval_11-May-2012\VOCtrainval_11-May-2012\VOCdevkit\VOC2012\SegmentationClassAug" # Enter the path to the gt folder
     train_imgs_path, train_gts_path = [], []
     train_data = np.zeros((10582, 256, 256, 3), dtype=np.float32)
     train_gt_arr = np.zeros((10582, 256, 256), dtype=np.long)

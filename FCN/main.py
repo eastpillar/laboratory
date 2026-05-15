@@ -36,11 +36,10 @@ class_colormap = {
     "20":[128,64,0], #TV/Monitor
 }
 
-train_name_file = '/home/aivs/바탕화면/hdd/dataset/VOCtrainval_11-May-2012/VOCdevkit/train_aug.txt'
-test_name_file = '/home/aivs/바탕화면/hdd/dataset/VOCtrainval_11-May-2012/VOCdevkit/VOC2012/ImageSets/Segmentation/val.txt'
+train_name_file = '/dataset/VOCtrainval_11-May-2012/VOCdevkit/train_aug.txt' # Provide the TXT file path for your train image list.
+test_name_file = '/dataset/VOCtrainval_11-May-2012/VOCdevkit/VOC2012/ImageSets/Segmentation/val.txt' # Provide the TXT file path for your test image list.
 
 train_imgs, train_gts, test_imgs, test_gts, train_img_name, test_img_name = data_loader(train_name_file, test_name_file)
-
 print('data load done')
 
 USE_CUDA = torch.cuda.is_available()
@@ -63,8 +62,8 @@ def train(MODEL, train_img, train_gt, batch_size, optimizer, device):
     MODEL.train()
     i, train_loss = 0, 0
     shuffle_img, shuffle_gt = shuffle_Data(train_img, train_gt)
-    for batch_idx in range(int(len(train_img) / batch_size)):
-        bth_gts = torch.from_numpy(np.array((shuffle_gt[i:i + batch_size, :, :]), dtype=np.long))
+    for batch_idx in tqdm(range(int(len(train_img) / batch_size))):
+        bth_gts = torch.from_numpy(np.array((shuffle_gt[i:i + batch_size, :, :]), dtype=np.int64))
         batch_img = torch.from_numpy(np.array((shuffle_img[i:i + batch_size, :, :, :]), dtype=np.float32))
         bth_img, bth_gt = batch_img.permute(0,3,1,2).to(device), bth_gts.to(device)
         optimizer.zero_grad()
@@ -85,7 +84,7 @@ def evaluate(MODEL, test_img, test_gt, device, epoch):
     eval_IOUs = np.zeros((21, 21), dtype=np.int64)
     save_pred_image = np.zeros((1449,256,256), dtype=np.uint32)
     with torch.no_grad():
-        for bth in range(len(test_img)):
+        for bth in tqdm(range(len(test_img))):
             eval_IOU, IOU = np.zeros((21, 21), dtype=np.int32), 0
             bth_imgs = torch.from_numpy(np.array([test_img[bth]], dtype=np.float32))
             bth_gts = torch.from_numpy(np.array([test_gt[bth]], dtype=np.long)) #[1,256,256,21]
@@ -127,7 +126,7 @@ def evaluate(MODEL, test_img, test_gt, device, epoch):
 
 
 def pred_color_img(gt_pred_image, gt_image_name, mIOU, epoch):
-    test_path = '/home/aivs/바탕화면/adj_test/FCN/test_savePredict_Final'
+    test_path = '/FCN/test_savePredict_Final'
     gt_pred_rgb = np.zeros((1449,256,256,3), dtype=np.uint8)
 
     for idx2,img2 in enumerate(gt_pred_image):
