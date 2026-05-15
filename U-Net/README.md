@@ -1,5 +1,5 @@
 ## Download weights
-- torchvision.models.vgg16_bn
+- torchvision.models.vgg16_bn (Used for downsampling.)
 
 ## Dataset
 - [VOCtrainval_11-May-2012](https://drive.google.com/file/d/1NV-QMB3XOVqkHCilVkszH_IzrvqonHRj/view?usp=sharing)
