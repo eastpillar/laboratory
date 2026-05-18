@@ -106,7 +106,7 @@ class UNet(nn.Module):
         out = self.relu2(self.bn2(self.conv1_2(out)))
         out1 = out #256, 64
         out = self.maxpool1(out) #128, 64
-        temp = 0
+
         out = self.relu3(self.bn3(self.conv2_1(out)))
         out = self.relu4(self.bn4(self.conv2_2(out)))
         out2 = out #128, 128
