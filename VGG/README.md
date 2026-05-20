@@ -1,3 +1,6 @@
+## Download weights
+- [Google Driver](https://drive.google.com/file/d/1tJmqafa0gLnAE2GGOwX7qUD6cdeZ_bCB/view?usp=sharing)
+
 ## Dataset
 - TinyImageNet_200
 
