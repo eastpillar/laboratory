@@ -1,7 +1,9 @@
 # OpenVLA-ECoT: Embodied CoT OpenVLA
 
- 
+
 <hr style="border: 2px solid gray;"></hr>
+This experiment was conducted by modifying the official GitHub codebase, based on the original OpenVLA paper: https://github.com/openvla/openvla
+
 
 ## Getting Started
 
@@ -14,7 +16,6 @@ Use the setup commands below to get started:
 ```bash
 conda create -n openvla python=3.10 -y
 conda activate openvla
-
 
 conda install pytorch torchvision torchaudio pytorch-cuda=12.4 -c pytorch -c nvidia -y  # UPDATE ME!
 
@@ -77,6 +78,34 @@ pip install -r experiments/robot/libero/libero_requirements.txt
 
 [New Thought]: Place tomato sauce in basket PLAN: 1. Move left 2. Hover over basket 3. Open gripper SUBTASK REASONING: Basket’s position requires leftward movement after ascent SUBTASK: Finalize placement MOVE REASONING: Ascending to clear obstacles before horizontal traversal MOVE: move up GRIPPER POSITION: [59, 0, 77, 17, 78, 14, 78, 14, 79, 14] VISIBLE OBJECTS: a basket [0, 109, 60, 196], a can a can [91, 117, 118, 155], a bottle [157, 77, 181, 126] ACTION: ѫ과巴仮̍達忠..."
 ```
+
+## Dataset
+- LIBERO
+
+## Inference
+- Model : OpenVLA-ECoT (Vision : SigLIP, DINOv2, LLM & Reasoning : Llama 2-7b)
+- Fine-Tuning Method : LoRA (Low-Rank Adaptation)
+- LoRA Rank ($r$) : 32
+- Action Space : 7-DoF (Continuous, Un-normalized)
+- OS : Ubuntu
+
+### Evaluation Setting
+
+* Dataset
+    1. Task : LIBERO-spatial, LIBERO-object, LIBERO-goal, LIBERO-10, LIBERO-90
+    2. Size : 224 x 224 (Center Cropped)
+    3. Observation Space : RGB Image + Proprioceptive State (End-effector, Axis-Angle, Gripper Q-pos)
+
+* HyperParameter
+    1. Decoding Strategy : Greedy Decoding (do_sample=False)
+    2. Reasoning Frequency : 3
+    3. Max New Tokens (Reasoning) : 1024
+    4. Max New Tokens (Action) : 7
+    5. Initial Wait Steps : 10
+    6. Num episodes per task : 50
+    7. Max episode steps : spatial(220), object(280), goal(300), 10(520)
+
+
 #### Launching LIBERO Evaluations
 
 The OpenVLA models fine-tuned with LoRA (r=32) for LIBERO simulations are available on Hugging Face. Checkpoints are provided for LIBERO-Spatial, LIBERO-Object, LIBERO-Goal, and LIBERO-10.:

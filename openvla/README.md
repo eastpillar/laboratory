@@ -1,12 +1,8 @@
 # OpenVLA: An Open-Source Vision-Language-Action Model
 
-[![arXiv](https://img.shields.io/badge/arXiv-2406.09246-df2a2a.svg?style=for-the-badge)](https://arxiv.org/abs/2406.09246)
-[![HF Models](https://img.shields.io/badge/%F0%9F%A4%97-Models-yellow?style=for-the-badge)](https://huggingface.co/openvla/openvla-7b)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.2.0-EE4C2C.svg?style=for-the-badge&logo=pytorch)](https://pytorch.org/get-started/locally/)
-[![Python](https://img.shields.io/badge/python-3.10-blue?style=for-the-badge)](https://www.python.org)
-[![License](https://img.shields.io/github/license/TRI-ML/prismatic-vlms?style=for-the-badge)](LICENSE)
- 
 <hr style="border: 2px solid gray;"></hr>
+
+This experiment was conducted by modifying the official GitHub codebase, based on the original OpenVLA paper: https://github.com/openvla/openvla
 
 ## Getting Started
 
@@ -60,6 +56,28 @@ pip install -r experiments/robot/libero/libero_requirements.txt
 
 <span align="center"><img src="2026_05_30-23_18_09--episode=2--success=True--task=pick_up_the_alphabet_soup_and_place_it_in_the_bask.gif"/></span>
 
+## Dataset
+- LIBERO
+
+## Inference
+- Model : OpenVLA (Vision : SigLIP, DINOv2, LLM : Llama 2-7b)
+- Fine-Tuning Method : LoRA (Low-Rank Adaptation)
+- LoRA Rank ($r$) : 32
+- Action Space : 7-DoF (Continuous, Un-normalized)
+- OS : Ubuntu
+
+### Evaluation Setting
+
+* Dataset
+    1. Task : LIBERO-spatial, LIBERO-object, LIBERO-goal, LIBERO-10, LIBERO-90
+    2. Size : 224 x 224 (Center Cropped)
+    3. Observation Space : RGB Image + Proprioceptive State (End-effector, Axis-Angle, Gripper Q-pos)
+
+* HyperParameter
+    1. Initial Wait Steps : 10
+    2. Num episodes per task : 50
+    3. Max episode steps : spatial(220), object(280), goal(300), 10(520)
+  4. 
 #### Launching LIBERO Evaluations
 
 The OpenVLA models fine-tuned with LoRA (r=32) for LIBERO simulations are available on Hugging Face. Checkpoints are provided for LIBERO-Spatial, LIBERO-Object, LIBERO-Goal, and LIBERO-10.:
@@ -72,30 +90,32 @@ To start evaluation with one of these checkpoints, run one of the commands below
 
 ```bash
 # Launch LIBERO-Spatial evals
+cd <absolute_path_to_OpenVLA_directory>
+
 python experiments/robot/libero/run_libero_eval.py \
   --model_family openvla \
-  --pretrained_checkpoint openvla/openvla-7b-finetuned-libero-spatial \
+  --pretrained_checkpoint ./openvla-7b-finetuned-libero-spatial \
   --task_suite_name libero_spatial \
   --center_crop True
 
 # Launch LIBERO-Object evals
 python experiments/robot/libero/run_libero_eval.py \
   --model_family openvla \
-  --pretrained_checkpoint openvla/openvla-7b-finetuned-libero-object \
+  --pretrained_checkpoint ./openvla-7b-finetuned-libero-object \
   --task_suite_name libero_object \
   --center_crop True
 
 # Launch LIBERO-Goal evals
 python experiments/robot/libero/run_libero_eval.py \
   --model_family openvla \
-  --pretrained_checkpoint openvla/openvla-7b-finetuned-libero-goal \
+  --pretrained_checkpoint ./openvla-7b-finetuned-libero-goal \
   --task_suite_name libero_goal \
   --center_crop True
 
 # Launch LIBERO-10 (LIBERO-Long) evals
 python experiments/robot/libero/run_libero_eval.py \
   --model_family openvla \
-  --pretrained_checkpoint openvla/openvla-7b-finetuned-libero-10 \
+  --pretrained_checkpoint ./openvla-7b-finetuned-libero-10 \
   --task_suite_name libero_10 \
   --center_crop True
 ```
