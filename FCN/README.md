@@ -6,7 +6,7 @@
 
 ## Experiment
 - model : FCN-8s
-
+- OS : Ubuntu
 
 - setting
   - 

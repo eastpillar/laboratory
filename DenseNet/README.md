@@ -1,4 +1,4 @@
-## Download weights
+## Download weights (Comp factor 0.5)
 - [Google Driver](https://drive.google.com/file/d/1xaTGwXPhIZBqeDME6X9yexJUEdKmgFQs/view?usp=sharing)
 
 ## Dataset
@@ -6,7 +6,7 @@
 
 ## Experiment
 - model : DenseNet_121
-
+- OS : Ubuntu
 
 - setting
   - 

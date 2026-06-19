@@ -41,32 +41,30 @@ class VGG(nn.Module):
         self.fc3 = nn.Linear(4096,200)
         self.dropout = nn.Dropout2d(p=0.5)
 
-
-
-    def forward(self,x):
-        out = F.relu(self.bn1(self.conv1_1(x)))
-        out = F.relu(self.bn2(self.conv1_2(out)))
-        out = self.maxpool1(out)
-        out = F.relu(self.bn3(self.conv2_1(out)))
-        out = F.relu(self.bn4(self.conv2_2(out)))
-        out = self.maxpool2(out)
-        out = F.relu(self.bn5(self.conv3_1(out)))
-        out = F.relu(self.bn6(self.conv3_2(out)))
-        out = F.relu(self.bn7(self.conv3_3(out)))
-        out = self.maxpool3(out)
-        out = F.relu(self.bn8(self.conv4_1(out)))
-        out = F.relu(self.bn9(self.conv4_2(out)))
-        out = F.relu(self.bn10(self.conv4_3(out)))
-        out = self.maxpool4(out)
-        out = F.relu(self.bn11(self.conv5_1(out)))
-        out = F.relu(self.bn12(self.conv5_2(out)))
-        out = F.relu(self.bn13(self.conv5_3(out)))
-        out1 = self.maxpool5(out)
-        out = self.flatten(out1)
-        out = F.relu(self.fc1(out))
-        out = self.dropout(out)
-        out = F.relu(self.fc2(out))
-        out = self.dropout(out)
-        out = self.fc3(out)
+    def forward(self, x):  # [Batch, 3, 128, 128]
+        out = F.relu(self.bn1(self.conv1_1(x)))  # [Batch, 64, 128, 128]
+        out = F.relu(self.bn2(self.conv1_2(out)))  # [Batch, 64, 128, 128]
+        out = self.maxpool1(out)  # [Batch, 64, 64, 64]
+        out = F.relu(self.bn3(self.conv2_1(out)))  # [Batch, 128, 64, 64]
+        out = F.relu(self.bn4(self.conv2_2(out)))  # [Batch, 128, 64, 64]
+        out = self.maxpool2(out)  # [Batch, 128, 32, 32]
+        out = F.relu(self.bn5(self.conv3_1(out)))  # [Batch, 256, 32, 32]
+        out = F.relu(self.bn6(self.conv3_2(out)))  # [Batch, 256, 32, 32]
+        out = F.relu(self.bn7(self.conv3_3(out)))  # [Batch, 256, 32, 32]
+        out = self.maxpool3(out)  # [Batch, 256, 16, 16]
+        out = F.relu(self.bn8(self.conv4_1(out)))  # [Batch, 512, 16, 16]
+        out = F.relu(self.bn9(self.conv4_2(out)))  # [Batch, 512, 16, 16]
+        out = F.relu(self.bn10(self.conv4_3(out)))  # [Batch, 512, 16, 16]
+        out = self.maxpool4(out)  # [Batch, 512, 8, 8]
+        out = F.relu(self.bn11(self.conv5_1(out)))  # [Batch, 512, 8, 8]
+        out = F.relu(self.bn12(self.conv5_2(out)))  # [Batch, 512, 8, 8]
+        out = F.relu(self.bn13(self.conv5_3(out)))  # [Batch, 512, 8, 8]
+        out1 = self.maxpool5(out)  # [Batch, 512, 4, 4]
+        out = self.flatten(out1)  # [Batch, 8192]
+        out = F.relu(self.fc1(out))  # [Batch, 4096]
+        out = self.dropout(out)  # [Batch, 4096]
+        out = F.relu(self.fc2(out))  # [Batch, 4096]
+        out = self.dropout(out)  # [Batch, 4096]
+        out = self.fc3(out)  # [Batch, 200]
 
         return out, out1

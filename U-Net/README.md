@@ -6,7 +6,7 @@
 
 ## Experiment
 - model : U-Net
-
+- OS : Ubuntu
 
 - setting
   - 

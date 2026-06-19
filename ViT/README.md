@@ -3,7 +3,7 @@
 - TinyImageNet_200
 ## Experiment
 - model : ViT_Base/16
-
+- OS : Ubuntu
 
 - Scratch setting
   - 
