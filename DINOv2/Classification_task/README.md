@@ -1,5 +1,5 @@
 ## Download weights
-- [Hugging Face](https://huggingface.co/DongJooAn/DenseNet/tree/main)
+- [Hugging Face](https://huggingface.co/DongJooAn/DINOv2/tree/main)
 
 ## Dataset
 - TinyImageNet_200
