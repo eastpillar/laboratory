@@ -1,8 +1,8 @@
 ## Download weights
 - torchvision.models.vgg16_bn (Used for downsampling.)
-- U-Net [Google Driver](https://drive.google.com/file/d/1oAiHekDtKg7gj5IOJGWWobtydzfS7kK2/view?usp=sharing)
+- U-Net [Hugging Face](https://huggingface.co/DongJooAn/U-Net/tree/main)
 ## Dataset
-- [VOCtrainval_11-May-2012](https://drive.google.com/file/d/1NV-QMB3XOVqkHCilVkszH_IzrvqonHRj/view?usp=sharing)
+- [VOCtrainval_11-May-2012](https://huggingface.co/datasets/DongJooAn/DataSet/tree/main)
 
 ## Experiment
 - model : U-Net
