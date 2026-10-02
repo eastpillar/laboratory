@@ -1,8 +1,8 @@
 ## Download weights
-- [Google Driver](https://drive.google.com/file/d/1lCwrjO9r2F7M7butimECEECZ47np1ljx/view?usp=sharing)
+- [Hugging Face](https://huggingface.co/DongJooAn/DenseNet/tree/main)
 
 ## Dataset
-- [VOCtrainval_11-May-2012](https://drive.google.com/file/d/1NV-QMB3XOVqkHCilVkszH_IzrvqonHRj/view?usp=sharing)
+- [VOCtrainval_11-May-2012](https://huggingface.co/datasets/DongJooAn/DataSet/tree/main)
 
 ## Experiment
 - Pre-trained model : DINOv2-ViT-Base/14
