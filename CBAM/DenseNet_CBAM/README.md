@@ -1,5 +1,5 @@
 ## Download weights
-- [Google Driver](https://drive.google.com/file/d/1sDUhkKlLOwi6xPO5Yfxo6NARyygHczeP/view?usp=sharing)
+- [Hugging Face](https://huggingface.co/DongJooAn/CBAM/tree/main)
 
 ## Dataset
 - TinyImageNet_200
