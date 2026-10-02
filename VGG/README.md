@@ -7,7 +7,7 @@
 [![Architecture PDF](https://img.shields.io/badge/PDF-모델%20구조%20및%20흐름도%20보기-df2a2a.svg?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](../Seminar_presentation_slides/VGG&ResNet_seminar_ppt.pdf)
 
 ## Download weights
-- [Google Driver](https://drive.google.com/file/d/1tJmqafa0gLnAE2GGOwX7qUD6cdeZ_bCB/view?usp=sharing)
+- [Hugging Face](https://huggingface.co/DongJooAn/VGG/tree/main)
 
 ## Dataset
 - TinyImageNet_200
