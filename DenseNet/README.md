@@ -1,5 +1,5 @@
 ## Download weights (Comp factor 0.5)
-- [Google Driver](https://drive.google.com/file/d/1xaTGwXPhIZBqeDME6X9yexJUEdKmgFQs/view?usp=sharing)
+- [Hugging Face](https://huggingface.co/DongJooAn/DenseNet/tree/main)
 
 ## Dataset
 - TinyImageNet_200
